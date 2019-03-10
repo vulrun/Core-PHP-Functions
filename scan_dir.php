@@ -4,10 +4,10 @@ function scan_dir($path, $opts = null, &$list = array() ){
 	$files = array_diff( $files, array('.', '..') );
 
 	foreach($files as $file){
-		$fullpath = "$path/$file";
+		$fullpath = rtrim($path, '/') . "/$file";
 		if( is_dir($fullpath) ){
 			stripos($opts, 'skipDirs' ) === false && array_push($list, $fullpath);
-			stripos($opts, 'recursive') !== false && scan_dir("$path/$file", $opts, $list);
+			stripos($opts, 'recursive') !== false && scan_dir($fullpath, $opts, $list);
 		}
 		else {
 			stripos($opts, 'skipFiles') === false && array_push($list, $fullpath);
